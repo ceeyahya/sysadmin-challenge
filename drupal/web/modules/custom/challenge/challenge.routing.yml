@@ -1,0 +1,48 @@
+page_example.broken:
+  path: '/broken'
+  defaults:
+    _controller: '\Drupal\challenge\Controller\PagesController::broken'
+    _title: 'Page Example'
+  requirements:
+    _permission: 'access content'
+
+page_example.heavy:
+  path: '/heavy'
+  defaults:
+    _controller: '\Drupal\challenge\Controller\PagesController::heavy'
+    _title: 'Page Example'
+  requirements:
+    _permission: 'access content'
+
+page_example.slow:
+  path: '/slow'
+  defaults:
+    _controller: '\Drupal\challenge\Controller\PagesController::slow'
+    _title: 'Page Example'
+  requirements:
+    _permission: 'access content'
+
+page_example.crash:
+  path: '/crash'
+  defaults:
+    _controller: '\Drupal\challenge\Controller\PagesController::crash'
+    _title: 'Page Example'
+  requirements:
+    _permission: 'access content'
+
+page_example.fetch:
+  path: '/api/fetch'
+  defaults:
+    _controller: '\Drupal\challenge\Controller\PagesController::fetch'
+    _title: 'Page Example'
+  requirements:
+    _permission: 'access content'
+
+
+page_example.users:
+  path: '/api/users'
+  defaults:
+    _controller: '\Drupal\challenge\Controller\PagesController::users'
+    _title: 'Page Example'
+  requirements:
+    _permission: 'access content'

@@ -49,13 +49,21 @@ Le deuxième objectif à mettre en place une image NGINX:
  - NGINX doit s'exécutée par un utilisateur non privilégié (ex: www-data).
  - l'accès à NGINX doit être protégé par un schéma d'authentification basique (Basic Auth): test/test
 
+#### Mise en place du serveur de base de données MySQL
+
+Mettre en place un serveur MySQL 8.3 :
+- Configurer le chemain vers log_error, general_log_file et slow_query_log_file
+- Cofnigurer `max_connections` avec 50 comme valeur
+
 #### Décrire la stack applicatif
-Le troisième objectif consiste à relier et à décrire ces services via un fichier `docker-compose.yml`. Le dernier service qui va se rajouter c'est la base de données MySQL 8.3.
+Le troisième objectif consiste à relier et à décrire ces services via un fichier `docker-compose.yml`.
 
 Le fichier `docker-compose.yml` doit contenir les services suivants: php, nginx et mysql. Il doit gérer l'inter-communication entre ces services; la persistance des données de la base de données ainsi que le dossier Drupal `sites/default/files`.
 
 #### Challenges
 Une fois ces éléments sont mis en place, nous pouvons procéder à l'installation du Projet et à la résolution des problèmes suivants:
+
+Avant d'attaquer les challenges: il faut installer le module `challenge` avec la commande `drush en -y challenge`
 
 **Gestion des erreurs**
 - Sur Drupal la page /broken renvoie une erreur 500 sans message d'indication. Identifier le message d'erreur et proposer une solution.
@@ -64,14 +72,17 @@ Une fois ces éléments sont mis en place, nous pouvons procéder à l'installat
 - Identifier et corriger le code responsable de la consommation excessive de mémoire sur la page /heavy à l'aide de l'extension PHP Memory Profiler.
 - Proposer une valeur memory_limit à configurer sur php
 
+- **NB** Si j'amais le bug n'est pas reproductible, il suffit de vider le cache Drupal `drush cr` et recharger la page.
+
 **Optimisation des Requêtes SQL**
  - Identifier la requête SQL problématique sur la page /slow à l'aide d'un outil de profilage des requêtes lentes (ex: slow_query).
  - Optimiser la requête SQL pour réduire son temps d'exécution.
 
 **Gestion des connexions simultanées**
-- Effectuer un test Apache Benchmark avec 500 utilisateurs sur la page /crash pour simuler des connexions simultanées.
+- Effectuer un test Apache Benchmark avec 200 utilisateurs sur la page /crash pour simuler des connexions simultanées.
 - Identifier l'erreur ou le goulot d'étranglement qui provoque le crash de la base de données.
 - Proposer et mettre en œuvre une solution pour résoudre le problème de crash de la base de données.
+
 ### Chapitre 2: Installation d'une application React connecté avec l'API Drupal
 
  Une fois la partie back-end déployer, nous pouvons procéder au déploiement de l'application React qui va se connecté à l'api fournis par Drupal (/api e.g http://localhost:8080/api).

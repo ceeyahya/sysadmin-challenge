@@ -1,0 +1,7 @@
+name: Challenge
+type: module
+description: 'Challenge'
+package: Example modules
+core_version_requirement: ^9.4 || ^10
+dependencies:
+  - drupal:node
