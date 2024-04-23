@@ -27,25 +27,27 @@ Drupal est un système de gestion de contenu (CMS) populaire écrit en PHP. Avan
 
 #### Créer une image Docker
 Le premier objectif de ce chapitre est de créer une image Docker avec les points suivant:
-	- *Image de base*: Alpine
-	- *Version PHP*: 8.3
-	- Dernière version de Drush https://www.drush.org/12.x/
-	- Dernière version de Composer https://getcomposer.org/download/
-	- Extensions PHP: php-mbstring, php-pecl-memcached, php-gd, php-pecl-zip, php-intl
-	- Installation de l'extension PHP Memory Profiler depuis la source (https://github.com/arnaud-lb/php-memory-profiler).
+ - *Image de base*: Alpine
+ - *Version PHP*: 8.3
+ - Dernière version de Drush https://www.drush.org/12.x/
+ - Dernière version de Composer https://getcomposer.org/download/
+ - Extensions PHP: php-mbstring, php-pecl-memcached, php-gd, php-pecl-zip, php-intl
+ - Installation de l'extension PHP Memory Profiler depuis la source (https://github.com/arnaud-lb/php-memory-profiler).
 
 **Spécifications techniques:**
-	- Utilisé uniquement php-fpm (NGINX doit se branché avec une socket php-fpm)
-	- Les services doivent s'exécutée par un utilisateur non privilégié (ex: www-data).
+
+ - Utilisé uniquement php-fpm (NGINX doit se branché avec une socket php-fpm)
+ - Les services doivent s'exécutée par un utilisateur non privilégié (ex: www-data).
+
 #### Mettre en place une image NGINX
 Le deuxième objectif à mettre en place une image NGINX:
-	- *Image de base*: Alpine
-	 - Version NGINX : 1.25.5
+ - *Image de base*: Alpine
+ - Version NGINX : 1.25.5
 
 **Spécifications techniques:**
-	- NGINX doit se branché avec une socket php-fpm
-	- NGINX doit s'exécutée par un utilisateur non privilégié (ex: www-data).
-	- l'accès à NGINX doit être protégé par un schéma d'authentification basique (Basic Auth): test/test
+ - NGINX doit se branché avec une socket php-fpm
+ - NGINX doit s'exécutée par un utilisateur non privilégié (ex: www-data).
+ - l'accès à NGINX doit être protégé par un schéma d'authentification basique (Basic Auth): test/test
 
 #### Décrire la stack applicatif
 Le troisième objectif consiste à relier et à décrire ces services via un fichier `docker-compose.yml`. Le dernier service qui va se rajouter c'est la base de données MySQL 8.3.
