@@ -107,5 +107,5 @@ Avant d'attaquer les challenges: il faut installer le module `challenge` avec la
 - Proposer des méthodes pour optimiser le téléchargement des assets, comme la mise en cache côté client (ce cache doit prendre en considération le rafraîchissement des différents type d'assets: fonts, css, images et JavaScript). L'application sera déployer régulièrement chaque jours et souvent c'est du code JS qui sera modifié. 
 
 **Correction de la Faille XSS sur la Page /security :**
-- Identifier la faille XSS présente sur la page /security.
-- Proposer une solution en mettant en place une politique de sécurité des contenus (CSP) pour prévenir les attaques XSS.
+- La page /security contient une image qui provient d'une source non identifié.
+- Proposer une solution pour bloqué toutes les images qui ne proviennent pas du host `localhost` en mettant en place une politique de sécurité des contenus (CSP) pour prévenir les attaques XSS.
