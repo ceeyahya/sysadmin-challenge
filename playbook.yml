@@ -1,0 +1,93 @@
+---
+- name: Provision VM
+  hosts: all
+  become: true
+  tasks:
+    - name: Fix potential package installation issues
+      apt:
+        autoremove: yes
+        autoclean: yes
+        cache_valid_time: 3600
+
+    - name: Update Packages
+      apt: update_cache=yes
+
+    - name: Install Packages
+      apt:
+        name:
+          - ca-certificates
+          - curl
+        state: present
+
+    - name: Create directory for Docker GPG key
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: 0755
+
+    - name: Download Docker GPG key
+      get_url:
+        url: https://download.docker.com/linux/debian/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: 0644
+
+    - name: Set permissions for Docker GPG key
+      file:
+        path: /etc/apt/keyrings/docker.asc
+        mode: 0444
+
+    - name: Add Docker repository
+      shell: >
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo $VERSION_CODENAME) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      args:
+        creates: /etc/apt/sources.list.d/docker.list
+
+    - name: Update package lists (again)
+      apt: update_cache=yes
+
+    - name: Install Docker and related packages
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+          - cron
+        state: present
+
+    - name: Check if daemon.json exists
+      stat:
+        path: /etc/docker/daemon.json
+      register: daemon_json
+
+    - name: Create daemon.json if it doesn't exist
+      file:
+        path: /etc/docker/daemon.json
+        state: touch
+      when: not daemon_json.stat.exists
+
+    - name: Configure Docker logging driver and size limit
+      blockinfile:
+        path: /etc/docker/daemon.json
+        block: |
+          {
+            "log-driver": "json-file",
+            "log-opts": {
+              "max-size": "100m"
+            }
+          }
+      become: yes
+
+    - name: Set up Cronjob for Docker cleanup
+      cron:
+        name: "docker_cleanup"
+        minute: "0"
+        hour: "0"
+        job: "/usr/bin/docker system prune -f"
+        user: vagrant
+
+    - name: Clone the repository to the home folder
+      ansible.builtin.git:
+        repo: "https://github.com/ceeyahya/sysadmin-challenge"
+        dest: "~/sysadmin-challenge"

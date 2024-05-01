@@ -882,11 +882,11 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
 $databases['default']['default'] = array (
-  'database' => 'vactory_db',
-  'username' => 'vactory_user',
-  'password' => '123456',
+  'database' => 'drupal',
+  'username' => 'drupal',
+  'password' => 'drupal',
   'prefix' => '',
-  'host' => '0.0.0.0',
+  'host' => 'mysql',
   'port' => '3306',
   'isolation_level' => 'READ COMMITTED',
   'driver' => 'mysql',
